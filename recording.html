@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Muli"></link>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"></link>
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        
+    
+    <title>Video Consent - Health</title>
+
+<style>
+    html, body {
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100%;
+        font-family: Muli;
+        background-color:white;
+    }
+
+    .baseDiv {
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100%;
+        font-family: Muli;
+    }
+    .secDiv {
+        width:96%;
+        margin-top: 6%;
+        margin-left:2%;
+        z-index: 1;
+    }
+
+    .priDiv {
+        background-size: cover;
+        margin-top: 10%;
+        background-repeat: no-repeat;
+        height: 35%;
+        font-family: Muli;
+        width:100%;
+        border-style: solid;
+    }
+
+    .para{
+        padding-left: 10%;
+        padding-right: 10%;
+        padding-top: 1vw;
+        padding-bottom: 2vw;
+    }
+    
+    .button{
+        width:84vw;
+        background-color: #FB0;
+        border-style: none;
+        border-radius: 1vw;
+        margin-left:6%;
+        height:13vw;
+        font-weight: bold;
+        font-size:large ;
+        padding-left: 5vw;
+        padding-top: -1vw;
+    
+    }
+
+    .buttonAlt{
+        width:88vw;
+        background-color: #FB0;
+        border-style: solid;
+        border-radius: 1vw;
+        margin-left:12%;
+        height:15vw;
+        font-weight: bolder;
+        font-size:large ;
+        /* padding-left: 5vw; */
+        padding-top: -1vw;
+        border-color: #FB0;
+    }
+
+    #preview{
+    object-fit: initial;
+    width: 61vw;
+    height: 99%;
+    margin-left:19vw;
+    }
+
+    #recPreview{
+        object-fit: initial;
+        width: 61vw;
+        height: 58vw;
+        margin-left:19vw;
+    }
+    
+    .topnav {
+    background-color: rgb(0, 0, 0);
+    overflow: hidden;
+    height: 13vw;
+    margin-top: 0px;
+    }
+
+
+    .progress {
+    margin: 10px;
+    width: 80vw;
+    height:3vw;
+    margin-left: 10vw;
+    margin-top: 1%;
+    border-radius:10px;
+    }
+   .cover{
+     width:100vw;
+     height:100vw;
+   }
+   
+   .ajax-loader {
+  visibility: hidden;
+  background-color: rgba(255,255,255,0.7);
+  position: absolute;
+  z-index: +100 !important;
+  width: 100%;
+  height:100%;
+  }
+
+.ajax-loader img {
+  position: relative;
+  top:50%;
+  left:50%;
+ }
+ 
+  ul {
+    list-style: none; /* Remove default bullets */
+    }
+    ul li::before {
+    content: "\2022";
+    color: #FB0;
+    font-weight: bolder;
+    font-size: larger;
+    display: inline-block; 
+    width: 5vw;
+    margin-left: -5vw;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    
+    }
+    
+</style>
+</head>
+<body>
+    
+    <div class="priDiv" id="recVideo" style="background-color:black">
+            <video  id="preview" autoplay="" muted="" ></video>
+    </div>
+
+	<div class="secDiv" id="contentDiv1">
+       <hr id="line" style="margin-top: 1%;width:95%;background-color: #f5f5f5;height: 2px;"></hr>
+	   <div style="border-radius:5px;border-style: solid; border-color: #f5f5f5;width:88%;margin-left: 6%;height:30vw;margin-top:21vw;margin-bottom: 21vw;">
+        	<ul style="padding-top:4%; text-align: left;padding-right: 8%;">
+            	<li>Press <q cite="https://www.imdb.com/title/tt0062622/quotes/qt0396921">start recording</q> and <b>read out the text that appears here.</b></li>
+        	</ul>
+       </div>
+       <hr style="margin-top: 1%;width:95%;background-color: #f5f5f5;height: 2px;"></hr>
+
+    <button id="startButton" type="button" class="button" onclick="show()" ><span class="glyphicon glyphicon-facetime-video" aria-hidden="true" style="padding-right: 5vw;"></span>Start Recording</button>
+  </div>
+
+  <div class="secDiv" id="contentDiv2" style="display: none;">
+    <p class="para" style="padding-bottom: 2%;"><b>Now, read the following facing the camera
+      After reading press stop recording.</b>
+    </p>
+
+    <hr style="margin-top: 1%;width:95%;background-color: #f5f5f5;height: 2px;"></hr>
+
+    <p class="para">I, <span th:text="${name}"></span> have taken health Insurance policy from Digit Insurance. 
+        The information including any medical status shared by me is correct and to the best of my knowledge.
+    </p>
+
+<hr style="margin-top: 1%;width:95%;background-color: #f5f5f5;height: 2px;"></hr>
+
+<button id="stopButton" type="button"  class="button" style=" background-color: white; border-color: red;border-width: 1px;border-style: solid" ><span class="glyphicon glyphicon-stop" aria-hidden="true" style="padding-right: 5vw; color:red"></span>Stop Recording</button>
+
+</div>
+
+<div class="priDiv" id="next" style="display:none;background-color:black;">
+  <div class="previewDiv" id="recVideo">
+    <video  id="recPreview" autoplay="false" muted="false" controls="true"></video>
+  </div>
+
+  <div class="screenDiv" id="contentDiv1">
+     
+      <hr style="margin-top: 7%;width:95%;background-color: #f5f5f5;height: 1px;"></hr>
+
+     <form action="recording" method="GET" id="formID" style="width:45vw">
+     	<input id="test" type="hidden"  name="id" value=""></input>
+          <button id="Retake" type="submit" class="buttonAlt" onclick="retake()" style="background-color: white;"  ><span class="glyphicon glyphicon-refresh" aria-hidden="true" style="padding-right: 5vw;"></span>Retake</button>
+      </form>
+       
+          <button id="Upload" style="margin-top:5vw;margin-left:5vw" type="button" class="buttonAlt" onclick="uploadToS3()"><span class="glyphicon glyphicon-ok" aria-hidden="true" style="padding-right: 5vw;"></span>Upload</button>
+       
+       
+</div>
+</div>
+
+  <div id="start" style="width:100%;height:100%;margin-top:-148%; z-index: 1;display:none"><img src="welcome.png" alt="" style="width: 100%;height: 100%;"></img></div>
+  
+   <div class="topnav" id="nav" style="display:none">
+                    <li class="main-logo"><img src="digit-logo.png" style="width:13%;height:60%;margin-top: 3%;margin-left: -1%;"></img></li>
+            </div>
+            <div id="thankYou" style="width:92vw; height:140vw; margin-top:20vw;margin-left: 4vw;display: none;">
+                <img src="great_shot_final.gif" style="width:96%;height:60%;margin-left:-0%;margin-top: -20%;"></img>
+                <hr style="margin-top: 7%;width:100%;background-color: #f5f5f5;height: 1px;"></hr>
+                <h4>Thank you! You've been wonderful.</h4>
+                <br></br>
+                <h5>Here's to happy health &#x1F60A;</h5>
+            </div>
+            <div id="uploading" style="width:92vw; height:140vw; margin-top:20vw;margin-left: 2vw;background-color: white;display:none">
+                    <img src="uploading.gif" style="width:96%;height:28%;margin-top:20vw;margin-left: 2%;"></img>
+                    <hr style="margin-left:2%;margin-top: 7%;width:96%;background-color: #f5f5f5;height: 1px;"></hr>
+                    <h4 style="margin-left:36%">uploading</h4>
+                    
+                </div>
+
+
+ </body>
+
+
+<script th:inline="javascript">
+/*<![CDATA[*/
+ let preview = document.getElementById("preview");
+ let recPreview = document.getElementById("recPreview");
+ let startButton = document.getElementById("startButton");
+ let stopButton = document.getElementById("stopButton");
+ let downloadButton = document.getElementById("downloadButton1");
+ let Retake = document.getElementById("Retake");
+ let Upload = document.getElementById("Upload");
+ let processing = document.getElementById("processing");
+ let start = document.getElementById("start");
+ let recordingTimeMS = 55000;
+ let recordedBlob;
+ let data = [];
+ let next = document.getElementById("next");
+ let userId = "[[${id}]]";
+
+ function wait(delayInMS) {
+  return new Promise(resolve => setTimeout(resolve, delayInMS));
+}
+ function startRecording(stream, lengthInMS) {
+  let recorder = new MediaRecorder(stream);
+  //let data = [];
+ 
+  recorder.ondataavailable = event => data.push(event.data);
+  recorder.start();
+  console.log(recorder.state + " for " + (lengthInMS/1000) + " seconds...");
+ 
+  let stopped = new Promise((resolve, reject) => {
+    recorder.onstop = resolve;
+    recorder.onerror = event => reject(event.name);
+  });
+
+  let recorded = wait(lengthInMS).then(
+    () => recorder.state == "recording" && recorder.stop()
+  );
+ 
+  return Promise.all([
+    stopped,
+    recorded
+  ])
+  .then(() => data);
+}
+
+function stopRec(stream) {
+  stream.getTracks().forEach(track => track.stop());
+}
+
+startButton.addEventListener("click", function() {
+  navigator.mediaDevices.getUserMedia({
+    video: true,
+    audio: true
+  }).then(stream => {
+    preview.srcObject = stream;
+
+    preview.captureStream = preview.captureStream || preview.mozCaptureStream;
+    return new Promise(resolve => preview.onplaying = resolve);
+  }).then(() => startRecording(preview.captureStream(), recordingTimeMS))
+  .then (recordedChunks => {
+    recordedBlob = new Blob(recordedChunks, { type: "video/mp4" });
+    console.log("Successfully recorded " + recordedBlob.size + " bytes of " +
+        recordedBlob.type + " media.");
+        showScreen();
+  })
+}, false);
+
+stopButton.addEventListener("click", function() {
+    stopRec(preview.srcObject);
+   /*  $("#start").fadeIn(2000);
+    $("#start").fadeOut(2000); */
+    
+    
+}, false);
+
+
+
+
+
+function show(){
+  var contentDiv1 = document.getElementById("contentDiv1");
+  var contentDiv2 = document.getElementById("contentDiv2");
+  contentDiv1.style.display="none";
+  contentDiv2.style.display="block";
+
+}
+
+function showScreen(){
+  var contentDiv1 = document.getElementById("contentDiv1");
+  var contentDiv2 = document.getElementById("contentDiv2");
+  var recVideo = document.getElementById("recVideo");
+  var next = document.getElementById("next");
+  contentDiv1.style.display="none";
+  contentDiv2.style.display="none";
+  recVideo.style.display = "none";
+  next.style.display="block";
+  recPreview.src = URL.createObjectURL(recordedBlob);  
+}
+
+function retake(){
+	var res = userId.substr(1, 4);
+	document.getElementById("test").value = res;
+	recPreview.src = URL.createObjectURL(recordedBlob);
+	Retake.href = recording.src;
+	Retake.download = "RecordedVideo.mp4";
+	
+    $.ajax({
+            type: "GET",
+            crossDomain: true,
+            url: "recording",
+            contentType: "application/json",
+            success: function (data) {
+            },
+            
+            error: function (request, error) {
+                alert("Something went wrong");
+            }
+        });
+ }
+ 
+function uploadToS3(){
+	  let name = (Math.ceil(Math.random() * 10));
+	  if(data.size>0||recordedBlob.size>0){
+	    var file = new File([recordedBlob], name+".mp4");
+	    console.log(file.name);
+	    fd = new FormData();
+	    fd.append( "file", file );
+	    fd.append("id", userId);
+	    var msg = "Recording sent successfully"; 
+	    
+	    $.ajax({
+	                type : "POST",
+	                url : "uploadToS3",
+	                crossOrigin: null,
+	                data: fd,
+	                processData: false,
+	                contentType: false,
+	                success: function(result) {
+	                	$('#next').hide();
+	                	$('#nav').show();
+	                	$('#uploading').show();
+	                	 setTimeout(function() {
+	                	        $('#uploading').hide();
+	                	        document.getElementById("thankYou").style.display="block";
+	                	        }, 4000);
+	                	
+	                },
+	               
+	            });
+	    
+	    
+	}
+	else{
+	  swal( "Error!","Please record video to continue", "warning");
+	}
+	
+	}
+ 
+
+    
+function thankYou(){
+	   $.ajax({
+	                type : "POST",
+	                url : "thankyou",
+	                crossOrigin: null,
+	                processData: false,
+	                contentType: false,
+	                success: function(result) {
+	               
+	                }
+	            });
+	}
+    
+    
+function downloadit(){
+	  if(data.size>0||recordedBlob.size>0){
+		recPreview.src = URL.createObjectURL(recordedBlob);
+	    downloadButton.href = recPreview.src;
+	    downloadButton.download = name+".mp4";
+	  }
+	    else{
+	      swal( "Error!","Please record video to continue", "warning");
+	    }
+	}
+/*]]>*/
+</script>   
+</html>
