@@ -1,0 +1,73 @@
+<div class="container col-12">
+    <div class="priDiv" id="recVideo" style="background-color:black">
+      <video  id="preview" autoplay="true" muted="muted"></video>
+    </div>
+  
+    <div class="secDiv" id="contentDiv1">
+    <hr id="line" style="margin-top: 1%;width:95%;background-color: #f5f5f5;height: 2px;">
+    <div style="border-radius:5px;border-style: solid; border-color: #f5f5f5;width:88%;margin-left: 6%;height:30vw;margin-top:21vw;margin-bottom: 21vw;">
+      <ul style="padding-top:4%; text-align: left;padding-right: 8%;">
+          <li>Press <q cite="https://www.imdb.com/title/tt0062622/quotes/qt0396921">start recording</q> and <b>read out the text that appears here.</b></li>
+      </ul>
+    </div>
+    <hr style="margin-top: 1%;width:95%;background-color: #f5f5f5;height: 2px;">
+  
+    <button id="startButton" type="button" class="button" (click)="show(); startButtonClick();" ><span class="glyphicon glyphicon-facetime-video" aria-hidden="true" style="padding-right: 5vw;"></span>Start Recording</button>
+    </div>
+  
+    <div class="secDiv" id="contentDiv2" style="display: none;">
+    <p class="para" style="padding-bottom: 2%;"><b>Now, read the following facing the camera
+    After reading press stop recording.</b>
+    </p>
+  
+    <hr style="margin-top: 1%;width:95%;background-color: #f5f5f5;height: 2px;">
+  
+    <p class="para">I, <span th:text="${name}"></span> have taken health Insurance policy from Digit Insurance. 
+    The information including any medical status shared by me is correct and to the best of my knowledge.
+    </p>
+  
+    <hr style="margin-top: 1%;width:95%;background-color: #f5f5f5;height: 2px;">
+  
+    <button id="stopButton" type="button"  class="button"  (click)="stopButtonClick();" style=" background-color: white; border-color: red;border-width: 1px;border-style: solid" >
+      <span class="glyphicon glyphicon-stop" aria-hidden="true" style="padding-right: 5vw; color:red"></span>Stop Recording</button>
+  
+    </div>
+  
+    <div class="priDiv" id="next" style="display:none;background-color:black;">
+    <div class="previewDiv" id="recVideo">
+    <video  id="recPreview" autoplay="false" muted="muted"  controls="true"></video>
+    </div>
+  
+    <div class="screenDiv" id="contentDiv1">
+  
+    <hr style="margin-top: 7%;width:95%;background-color: #f5f5f5;height: 1px;">
+  
+    <form action="recording" method="GET" id="formID" style="width:45vw">
+    <input id="test" type="hidden"  name="id" value="">
+      <button id="Retake" type="submit" class="buttonAlt" (click)="retake()" style="background-color: white;"  ><span class="glyphicon glyphicon-refresh" aria-hidden="true" style="padding-right: 5vw;"></span>Retake</button>
+    </form>
+  
+      <button id="Upload" style="margin-top:5vw;margin-left:5vw" type="button" class="buttonAlt" (click)="uploadToS3()" [disabled]="disabledFlag"><span class="glyphicon glyphicon-ok" aria-hidden="true" style="padding-right: 5vw;"></span>Upload</button>
+  
+  
+    </div>
+    </div>
+  
+    <div id="start" style="width:100%;height:100%;margin-top:-148%; z-index: 1;display:none"><img src="/assets/images/welcome.png" alt="" style="width: 100%;height: 100%;"></div>
+  
+    <div class="topnav" id="nav" style="display:none">
+                <li class="main-logo"><img src="/assets/images/digit-logo.png" style="width:13%;height:60%;margin-top: 3%;margin-left: -1%;"></li>
+        </div>
+        <div id="thankYou" style="width:92vw; height:140vw; margin-top:20vw;margin-left: 4vw;display: none;">
+            <img src="/assets/images/great_shot_final.gif" style="width:96%;height:60%;margin-left:-0%;margin-top: -20%;">
+            <hr style="margin-top: 7%;width:100%;background-color: #f5f5f5;height: 1px;">
+            <h4>Thank you! You've been wonderful.</h4>
+            <br>
+            <h5>Here's to happy health &#x1F60A;</h5>
+        </div>
+        <div id="uploading" style="width:92vw; height:140vw; margin-top:20vw;margin-left: 2vw;background-color: white;">
+                <img src="/assets/images/uploading.gif" style="width:96%;height:28%;margin-top:20vw;margin-left: 2%;">
+                <hr style="margin-left:2%;margin-top: 7%;width:96%;background-color: #f5f5f5;height: 1px;">
+                <h4 style="margin-left:36%">uploading</h4>            
+        </div>
+  </div>  
